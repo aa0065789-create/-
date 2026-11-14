@@ -8,10 +8,10 @@
 :root{--bg:#FFFCF6;--ink:#3E3A39;--co:#F2A497;--ye:#F6D27A;--bl:#A8D3E6;--gr:#B9DAA5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Huninn","Noto Sans TC","PingFang TC",sans-serif;line-height:1.6}
-nav{position:fixed;top:0;left:0;right:0;z-index:9;background:var(--bg);border-bottom:3px solid var(--ink);display:flex;gap:6px;overflow-x:auto;padding:calc(8px + env(safe-area-inset-top,0px)) 10px 8px}
-nav a{flex:none;color:var(--ink);text-decoration:none;border:3px solid var(--ink);border-radius:20px;padding:2px 12px;font-size:14px}
-nav a:nth-child(1){background:var(--co)}nav a:nth-child(2){background:var(--ye)}nav a:nth-child(3){background:var(--bl)}nav a:nth-child(4){background:var(--gr)}nav a:nth-child(5){background:var(--co)}nav a:nth-child(6){background:var(--ye)}nav a:nth-child(7){background:var(--bl)}
-main{max-width:640px;margin:0 auto;padding:78px 14px 40px}
+
+
+
+main{max-width:640px;margin:0 auto;padding:16px 14px calc(110px + env(safe-area-inset-bottom,0px))}
 section{margin-bottom:28px}h2{font-size:20px;margin:0 0 10px}
 .card{background:#fff;border:3px solid var(--ink);border-radius:24px;padding:14px;margin-bottom:12px}
 .hero{background:var(--bl);text-align:center;padding:10px 10px 16px;overflow:hidden}
@@ -30,7 +30,12 @@ section{margin-bottom:28px}h2{font-size:20px;margin:0 0 10px}
 .t-air{background:var(--co)}.t-sub{background:var(--bl)}.t-walk{background:var(--gr)}.t-bus{background:var(--ye)}.t-train{background:#F7C6B9}
 label.td{display:flex;gap:10px;align-items:center;padding:6px 0;cursor:pointer}label.td input{appearance:none;width:24px;height:24px;border:3px solid var(--ink);border-radius:8px;background:#fff;flex:none;display:grid;place-content:center}
 label.td input:checked{background:var(--gr)}label.td input:checked::after{content:"✓";font-size:16px;line-height:1}label.td input:checked+span{text-decoration:line-through;opacity:.6}
-input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font:inherit;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:14px;padding:6px 10px;width:100%;min-width:0}.nbt{font:inherit;font-size:13px;border:3px solid var(--ink);border-radius:14px;background:var(--bg);color:var(--ink);padding:2px 12px;margin-top:6px;cursor:pointer}.nbt.has{background:var(--ye)}.nbt svg{display:block}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.top .nbt{margin-top:0;flex:none}.mp{display:inline-block;border:3px solid var(--ink);border-radius:14px;padding:0 9px;font-size:12px;background:var(--bl);color:var(--ink);text-decoration:none;margin:0 4px 2px 0}.in .f,.card>textarea.f{margin-top:6px}.br{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}.nv{overflow-wrap:anywhere;margin-top:8px;background:#FFF3D1;border:3px dashed var(--ink);border-radius:14px;padding:6px 10px;white-space:pre-wrap;font-size:14px}.mk{margin-left:6px}.lb{display:block;font-size:13px}.lb .f{margin-top:2px}.g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.row{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:8px 12px;margin-bottom:8px;animation:pop .4s both}.row .x{margin-left:auto;text-align:right}.row button{font:inherit;border:3px solid var(--ink);border-radius:12px;background:var(--bg);cursor:pointer;color:var(--ink)}
+input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font:inherit;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:14px;padding:6px 10px;width:100%;min-width:0}.nbt{font:inherit;font-size:13px;border:3px solid var(--ink);border-radius:14px;background:var(--bg);color:var(--ink);padding:2px 12px;margin-top:6px;cursor:pointer}nav{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--bg);border-top:3px solid var(--ink);display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+nav a{color:var(--ink);text-decoration:none;border:3px solid var(--ink);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:13px;line-height:1.2;min-height:58px}
+nav a svg{width:26px;height:26px}
+nav a:nth-child(1),nav a:nth-child(5){background:var(--co)}nav a:nth-child(2){background:var(--ye)}nav a:nth-child(3){background:var(--bl)}nav a:nth-child(4){background:var(--gr)}
+nav a.on{background:var(--ink);color:var(--bg)}
+main>section{display:none}main>section.on{display:block;animation:pop .45s both}.nbt.has{background:var(--ye)}.nbt svg{display:block}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.top .nbt{margin-top:0;flex:none}.mp{display:inline-block;border:3px solid var(--ink);border-radius:14px;padding:0 9px;font-size:12px;background:var(--bl);color:var(--ink);text-decoration:none;margin:0 4px 2px 0}.in .f,.card>textarea.f{margin-top:6px}.br{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}.nv{overflow-wrap:anywhere;margin-top:8px;background:#FFF3D1;border:3px dashed var(--ink);border-radius:14px;padding:6px 10px;white-space:pre-wrap;font-size:14px}.mk{margin-left:6px}.lb{display:block;font-size:13px}.lb .f{margin-top:2px}.g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.row{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:8px 12px;margin-bottom:8px;animation:pop .4s both}.row .x{margin-left:auto;text-align:right}.row button{font:inherit;border:3px solid var(--ink);border-radius:12px;background:var(--bg);cursor:pointer;color:var(--ink)}
 @keyframes bounce{0%{transform:scale(.85)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes pop{0%{opacity:0;transform:translateY(18px) scale(.95)}70%{transform:translateY(-4px)}100%{opacity:1;transform:none}}
 @keyframes wig{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-6deg)}97%{transform:rotate(6deg)}}
@@ -41,9 +46,9 @@ input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font
 .plane{animation:fly 14s linear infinite}.cloud{animation:drift 7s ease-in-out infinite}.leaf{animation:fall 9s linear infinite}.sha{animation:bob 3s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style></head><body>
-<nav><a href="#top">首頁</a><a href="#flight">航班</a><a href="#plan">行程</a><a href="#todo">待辦</a><a href="#ledger">記帳</a><a href="#stay">住宿</a></nav>
+<nav><a href="#home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span>首頁</span></a><a href="#plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0114 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>行程</span></a><a href="#todo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12l3 3 5-6"/></svg><span>待辦</span></a><a href="#ledger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 7.5L12 12l3.5-4.5M8.5 12h7M8.5 15h7M12 12v6"/></svg><span>記帳</span></a><a href="#stay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18V6M3 14h18v4M21 18v-4a3 3 0 00-3-3h-7v3"/><circle cx="7" cy="10" r="2"/></svg><span>住宿</span></a></nav>
 <main id="top">
-<section class="card hero">
+<section class="card hero" id="home">
 <svg viewBox="0 0 400 200" role="img" aria-label="名古屋城與飛機插圖">
 <g fill="#fff" stroke="#3E3A39" stroke-width="3"><g class="cloud"><ellipse cx="70" cy="40" rx="30" ry="12"/><ellipse cx="90" cy="34" rx="18" ry="12"/></g><g class="cloud" style="animation-delay:-3s"><ellipse cx="320" cy="60" rx="30" ry="11"/><ellipse cx="338" cy="53" rx="16" ry="11"/></g></g>
 <g class="plane"><path d="M0 22h38l-7-9h8l11 9h22c6 0 6 8 0 8H11z" fill="#F2A497" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" transform="translate(0,10)"/></g>
@@ -60,7 +65,7 @@ input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font
 <div class="cd" id="cd" aria-live="off"></div><div id="cdn" style="font-size:13px;margin-top:6px"></div>
 </section>
 
-<section id="flight"><h2>✈ 航班</h2>
+<section id="flight"><h2>✈ 航班</h2><div class="card" style="background:var(--ye)">航班訂單編號：<b style="font-size:18px;letter-spacing:1px;user-select:all">JT689Y</b></div>
 <div class="card"><span class="pill" style="background:var(--co)">去程</span>樂桃航空 MM724 ・ 11/27（五）
 <div class="fl"><div><div class="big">02:55</div>桃園 T1</div><div class="mid">飛行 2 小時 30 分</div><div style="text-align:right"><div class="big">06:25</div>中部國際機場</div></div><div style="margin-top:8px"><span class="pill t-bus">🎒 手提行李 7kg</span></div></div>
 <div class="card"><span class="pill" style="background:var(--bl)">回程</span>樂桃航空 MM723 ・ 11/29（日）
@@ -68,9 +73,9 @@ input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font
 <p style="font-size:13px;margin:6px 0 0">起飛前 2–3 小時要到機場，最晚 20:30 前抵達。</p><div style="margin-top:8px"><span class="pill t-walk">🧳 托運行李 20kg</span><span class="pill t-bus">🎒 手提行李 7kg</span></div></div></section>
 
 <section id="plan"><h2>🗓 每日行程</h2>
-<div class="tabs" id="tabs"></div><div class="tl" id="tl"></div></section>
+<div class="tabs" id="tabs"></div><div id="dm"></div><div class="tl" id="tl"></div></section>
 
-<section id="todo"><h2>✅ 待辦清單</h2><div class="card" id="tdl"></div></section>
+<section id="todo"><h2>✅ 待辦清單</h2><div class="card" id="tdl"></div><div class="card"><b>我新增的待辦</b><div style="display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:8px"><input class="f" id="tdi" placeholder="輸入想新增的待辦"><button class="f" id="tda" style="width:auto;background:var(--gr);cursor:pointer">新增</button></div><div id="tdx" style="margin-top:10px"></div></div></section>
 
 <section id="ledger"><h2>💰 旅遊記帳</h2><div class="card">
 <div style="font-size:14px">累計總消費金額：</div><div class="fl" style="gap:6px"><div class="big" id="lt">¥0</div><div id="ltw" style="font-size:13px;text-align:right"></div></div>
@@ -80,8 +85,16 @@ input,select,textarea{font-size:16px!important;touch-action:manipulation}.f{font
 <label class="lb">消費分類<select class="f" id="ct"></select></label><label class="lb">日期<select class="f" id="dy"><option>出發前</option><option>Day 1</option><option>Day 2</option><option>Day 3</option></select></label></div>
 <label class="lb" style="margin:6px 0">消費項目<input class="f" id="nt" placeholder="例如：拉麵"></label><button class="f" id="ad" style="background:var(--co);cursor:pointer;width:100%">＋ 新增一筆</button></div>
 <div id="ll"></div></section>
-<section id="stay"><h2>🏨 住宿</h2><div class="card" style="background:var(--gr)"><h3 style="margin:0">BASE LAYER HOTEL NAGOYA NISHIKI</h3>
-<p style="margin:6px 0 0">離地鐵丸之內站步行約 1 分鐘，往返名古屋站與榮商圈都方便。</p><a href="https://www.google.com/maps/search/?api=1&query=BASE+LAYER+HOTEL+NAGOYA+NISHIKI" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;background:var(--ye);color:var(--ink);text-decoration:none;border:3px solid var(--ink);border-radius:18px;padding:6px 16px">📍 在 Google 地圖開啟</a></div></section>
+<section id="stay"><h2>🏨 住宿</h2><div class="card" style="background:var(--gr);overflow-wrap:anywhere"><h3 style="margin:0 0 8px">BASE LAYER HOTEL NAGOYA NISHIKI</h3>
+<div><b>入住日期</b><br>2026/11/27（五）－2026/11/29（日），2 晚</div>
+<div style="margin-top:8px"><b>入住時間</b><br>15:00 – 22:00</div>
+<div style="margin-top:8px"><b>退房時間</b><br>10:00 前</div>
+<div style="margin-top:8px"><b>英文地址</b><br>2 Chome-6-30 Nishiki, Naka Ward, Nagoya, Aichi 460-0003</div>
+<div style="margin-top:8px"><b>日文地址</b><br>2-6-30, Nishiki, 中区, 460-0003 名古屋市, 愛知県</div>
+<div style="margin-top:8px"><b>飯店電話</b><br><a href="tel:+81522657295" style="color:var(--ink)">+81-052-2657295</a></div>
+<p style="margin:10px 0 0;font-size:13px">離地鐵丸之內站步行約 1 分鐘。</p>
+<a href="https://www.google.com/maps/search/?api=1&query=BASE+LAYER+HOTEL+NAGOYA+NISHIKI+2+Chome-6-30+Nishiki+Naka+Ward+Nagoya" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;background:var(--ye);color:var(--ink);text-decoration:none;border:3px solid var(--ink);border-radius:18px;padding:6px 16px">📍 在 Google 地圖開啟</a></div>
+</section>
 </main>
 <script>
 const T={air:["飛機","t-air"],sub:["地鐵","t-sub"],walk:["步行","t-walk"],bus:["一日遊","t-bus"],train:["名鐵","t-train"],mrt:["機捷","t-train"],car:["包車","t-bus"]};
@@ -132,13 +145,19 @@ const D=[
 ["22:55","回程飛機","第四天 01:30 抵達桃園，15:00 回到宜蘭","air"]]}];
 let cur=0,ed=null,dc=null,dr=null,dt,dl=null,N={};try{N=JSON.parse(localStorage.getItem("ngyN")||"{}")}catch(e){}
 const IC='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19z" fill="#F2A497"/><path d="M14 7l3 3"/></svg>';const M={"抵達名古屋中部機場":"中部国際空港 セントレア","抵達名古屋車站":"名古屋駅","名古屋車站集合":"ミニストップ 椿町店 名古屋","結束行程回到名古屋":"ミニストップ 椿町店 名古屋","虎溪山永保寺":"虎渓山永保寺","小原四季櫻":"小原四季桜","香嵐溪":"香嵐渓","麵家獅子丸拉麵":"麺家 獅子丸 名古屋駅","世界の山ちゃん":"世界の山ちゃん 名古屋","辦理入住":"BASE LAYER HOTEL NAGOYA NISHIKI","回飯店休息":"BASE LAYER HOTEL NAGOYA NISHIKI","回飯店拿行李":"BASE LAYER HOTEL NAGOYA NISHIKI","飛驒高山老街":"飛騨高山 古い町並","合掌村":"白川郷 合掌造り集落","蓬萊軒鰻魚飯":"蓬莱軒 松坂屋店","榮商圈":"名古屋 栄","唐吉訶德":"ドン・キホーテ 名古屋 栄","祖父江銀杏":"祖父江ぎんなんパーク","名古屋城":"名古屋城","矢場味噌豬排":"矢場とん 松坂屋店","HARBS 榮本店":"HARBS 栄本店"};
+const HQ="BASE LAYER HOTEL NAGOYA NISHIKI",ST=["名古屋站",35.171,136.882,"名古屋駅"],HT=["飯店",35.172,136.902,HQ],SK=["榮商圈",35.168,136.909,"名古屋 栄"],AP=["中部機場",34.858,136.805,"中部国際空港"];
+const MP=[{p:[AP,ST,["永保寺",35.335,137.130,"虎渓山永保寺"],["小原四季櫻",35.213,137.316,"小原四季桜"],["香嵐溪",35.135,137.310,"香嵐渓"],HT],r:[0,1,2,3,4,1,5]},
+{p:[ST,["飛驒高山",36.141,137.259,"飛騨高山 古い町並"],["合掌村",36.257,136.906,"白川郷 合掌造り集落"],SK,HT],r:[0,1,2,0,3,4]},
+{p:[HT,["祖父江銀杏",35.286,136.738,"祖父江ぎんなんパーク"],["名古屋城",35.186,136.899,"名古屋城"],SK,AP],r:[0,1,2,3,0,4]}];
+function drawMap(n){const d=MP[n],nm=d.r.map(i=>d.p[i][3]),u="https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(nm[0])+"&destination="+encodeURIComponent(nm[nm.length-1])+"&waypoints="+encodeURIComponent(nm.slice(1,-1).join("|"))+"&travelmode=transit";
+document.getElementById("dm").innerHTML=`<div style="margin-bottom:14px"><a class="mp" style="background:var(--ye);font-size:14px;padding:4px 14px" href="${u}" target="_blank" rel="noopener">開啟google地圖看當日完整路線</a></div>`}
 const esc=t=>t.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const kl=k=>{const[a,b]=String(k).split("-"),d=D[a];return`Day ${+a+1}　${d.x[b][0]} ${d.x[b][1]}`};
 function drawI(k){const[a,j]=k.split("-");if(+a!==cur)return;const it=tl.children[+j];if(!it)return;const c=it.querySelector(".in"),b=it.querySelector("[data-j]"),h=N[k];
 b.innerHTML=IC;b.classList.toggle("has",!!h);
 c.innerHTML=ed===k?`<textarea class="f" rows="3" placeholder="寫下這個行程的備註，或改去哪裡……">${esc(dr!==null?dr:(h||""))}</textarea><div class="br"><button class="nbt" data-act="save">💾 儲存</button><button class="nbt" data-act="cancel">取消</button>${h?`<button class="nbt" data-act="del" style="background:var(--co)">${dc===k?"再按一次確認刪除":"🗑 刪除"}</button>`:""}</div>`:(h?`<div class="nv">${esc(h)}</div>`:"")}
 const tabs=document.getElementById("tabs"),tl=document.getElementById("tl");
-function show(n){cur=n;ed=null;dc=null;dr=null;[...tabs.children].forEach((b,i)=>b.classList.toggle("on",i==n));
+function show(n){cur=n;ed=null;dc=null;dr=null;drawMap(n);[...tabs.children].forEach((b,i)=>b.classList.toggle("on",i==n));
 tl.classList.remove("pop");void tl.offsetWidth;
 tl.innerHTML=D[n].x.map((e,i)=>`<div class="it${e[4]?" must":""}" style="--i:${i}"><div class="top"><div style="min-width:0"><div class="tm">${e[0]}${e[4]?'<span class="must-b">必去</span>':""}</div><h3>${e[1]}</h3></div><button class="nbt${N[n+"-"+i]?" has":""}" data-j="${i}" aria-label="備註">${IC}</button></div><div style="margin-top:2px">${e[3].split(",").map(k=>`<span class="pill ${T[k][1]}">${T[k][0]}</span>`).join("")}${M[e[1]]?`<a class="mp" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(M[e[1]])}" target="_blank" rel="noopener">📍 Google 地圖</a>`:""}</div><p>${e[2]}</p><div class="in"></div></div>`).join("");
 D[n].x.forEach((e,i)=>drawI(n+"-"+i));tl.classList.add("pop")}
@@ -155,7 +174,7 @@ c.innerHTML=v.join("");document.getElementById("cdn").textContent="距離 11/27 
 tick();setInterval(tick,1e3);
 
 let L={rate:0.21,items:[]};try{L=Object.assign(L,JSON.parse(localStorage.getItem("ngyL")||"{}"))}catch(e){}
-const C=["餐飲","交通","購物","門票","其他"],CC=["t-bus","t-sub","t-air","t-walk","t-train"],$=i=>document.getElementById(i);
+const C=["餐飲","交通","購物","住宿","伴手禮","其他"],CC=["t-bus","t-sub","t-air","t-walk","t-train","t-sub"],$=i=>document.getElementById(i);
 $("ct").innerHTML=C.map(c=>`<option>${c}</option>`).join("");$("rt").value=L.rate;const sN=()=>{try{localStorage.setItem("ngyN",JSON.stringify(N))}catch(x){}};
 tl.onclick=e=>{const b=e.target.closest("[data-j],[data-act]");if(!b)return;const it=b.closest(".it"),k=cur+"-"+[...tl.children].indexOf(it);
 if(b.dataset.j!==undefined){const o=ed;ed=ed===k?null:k;dc=null;dr=null;if(o)drawI(o);drawI(k);if(ed===k)it.querySelector("textarea").focus();return}
@@ -163,6 +182,7 @@ const a=b.dataset.act,t=it.querySelector("textarea");
 if(a==="save"){const v=t.value.trim();if(v)N[k]=v;else delete N[k];sN();ed=null;dc=null;dr=null;drawI(k)}
 else if(a==="cancel"){ed=null;dc=null;dr=null;drawI(k)}
 else if(a==="del"){if(dc===k){delete N[k];sN();ed=null;dc=null;dr=null;drawI(k)}else{dr=t.value;dc=k;drawI(k);clearTimeout(dt);dt=setTimeout(()=>{dc=null;drawI(k)},3000)}}};
+L.items.forEach(o=>{if(o.ct==="門票")o.ct="其他"});
 const sv=()=>{try{localStorage.setItem("ngyL",JSON.stringify(L))}catch(e){}};
 const jp=o=>o.cu=="JPY"?o.amt:o.amt/(L.rate||1);
 function rl(){const r=L.rate||0;let tot=0,by={};
@@ -175,4 +195,14 @@ $("ad").onclick=()=>{const a=parseFloat($("am").value);if(!(a>0)){$("am").focus(
 L.items.push({id:Date.now(),amt:a,cu:$("cu").value,ct:$("ct").value,dy:$("dy").value,nt:$("nt").value.trim()});$("am").value=$("nt").value="";sv();rl()};
 let lf=null,lt_;$("ll").onclick=e=>{const d=e.target.dataset.d;if(!d)return;clearTimeout(lt_);if(lf==d){lf=null;L.items=L.items.filter(o=>o.id!=d);sv()}else{lf=d;lt_=setTimeout(()=>{lf=null;rl()},3000)}rl()};
 $("rt").oninput=e=>{L.rate=parseFloat(e.target.value)||0;sv();rl()};rl();
+let TD=[],tdc=null,tdt;try{TD=JSON.parse(localStorage.getItem("ngyT")||"[]")}catch(e){}
+const sT=()=>{try{localStorage.setItem("ngyT",JSON.stringify(TD))}catch(e){}};
+function rt(){$("tdx").innerHTML=TD.map(o=>`<div class="row" style="animation:none"><label class="td" style="padding:0;flex:1;min-width:0"><input type="checkbox" data-t="${o.id}" ${o.d?"checked":""}><span style="overflow-wrap:anywhere">${esc(o.t)}</span></label><button data-x="${o.id}"${tdc==o.id?' style="background:var(--co)"':""}>${tdc==o.id?"再按一次確認":"刪除"}</button></div>`).join("")||"<small>還沒有新增的待辦。</small>"}
+function ta(){const v=$("tdi").value.trim();if(!v)return;TD.push({id:Date.now(),t:v,d:0});$("tdi").value="";sT();rt()}
+$("tda").onclick=ta;$("tdi").onkeydown=e=>{if(e.key==="Enter")ta()};
+$("tdx").onchange=e=>{const i=e.target.dataset.t;if(i){TD.find(o=>o.id==i).d=e.target.checked?1:0;sT()}};
+$("tdx").onclick=e=>{const i=e.target.dataset.x;if(!i)return;clearTimeout(tdt);if(tdc==i){tdc=null;TD=TD.filter(o=>o.id!=i);sT()}else{tdc=i;tdt=setTimeout(()=>{tdc=null;rt()},3000)}rt()};rt();
+const pg=["home","plan","todo","ledger","stay"];
+function goPage(){let h=location.hash.slice(1);if(!pg.includes(h))h="home";document.querySelectorAll("main>section").forEach(x=>x.classList.toggle("on",x.id===h||(h==="home"&&x.id==="flight")));document.querySelectorAll("nav a").forEach(x=>x.classList.toggle("on",x.getAttribute("href")==="#"+h));scrollTo(0,0)}
+addEventListener("hashchange",goPage);goPage();
 </script></body></html>

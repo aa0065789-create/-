@@ -86,7 +86,7 @@ main>section{display:none}main>section.on{display:block;animation:pop .45s both}
 <div class="fl"><div><div class="big">02:55</div>桃園 T1</div><div class="mid">飛行 2 小時 30 分</div><div style="text-align:right"><div class="big">06:25</div>中部國際機場</div></div><div style="margin-top:8px"><span class="pill t-bus">🎒 手提行李 7kg</span></div></div>
 <div class="card"><span class="pill" style="background:var(--bl)">回程</span>樂桃航空 MM723 ・ 11/29（日）
 <div class="fl"><div><div class="big">22:55</div>中部國際機場 T1</div><div class="mid">飛行 3 小時 35 分</div><div style="text-align:right"><div class="big">01:30</div>桃園（11/30）</div></div>
-<p style="font-size:13px;margin:6px 0 0">起飛前 2–3 小時要到機場，最晚 20:30 前抵達。</p><div style="margin-top:8px"><span class="pill t-walk">🧳 托運行李 20kg</span><span class="pill t-bus">🎒 手提行李 7kg</span></div></div></section>
+<p style="font-size:13px;margin:6px 0 0">起飛前 2–3 小時要到機場，最晚 20:30 前抵達。</p><div style="margin-top:8px"><span class="pill t-walk">🧳 托運行李 20kg</span><span class="pill t-bus">🎒 手提行李 7kg</span></div></div><div class="card" style="background:var(--gr)"><b>💾 匯出／匯入資料</b><p style="font-size:13px;margin:4px 0 8px">把另一台裝置上輸入的備註、記帳、待辦、住宿照片與評價存成檔案，再到這台匯入。</p><div class="br"><button class="nbt" id="bx" style="background:var(--ye);margin:0">⬇ 匯出（下載檔案）</button><label class="nbt" style="background:var(--co);margin:0">⬆ 匯入（上傳檔案）<input type="file" id="bi" accept=".json,application/json" hidden></label></div><div class="br" id="bc" hidden><button class="nbt" id="by" style="background:var(--co);margin:0">確認匯入（會覆蓋這台目前的資料）</button><button class="nbt" id="bn" style="margin:0">取消</button></div><div id="bst" style="font-size:13px;margin-top:8px"></div></div></section>
 
 <section id="plan"><h2>🗓 每日行程</h2>
 <div class="tabs" id="tabs"></div><div id="dm"></div><div class="tl" id="tl"></div></section>
@@ -260,4 +260,12 @@ drawRv();
 const pg=["home","plan","todo","ledger","stay"];
 function goPage(){let h=location.hash.slice(1);if(!pg.includes(h))h="home";document.querySelectorAll("main>section").forEach(x=>x.classList.toggle("on",x.id===h||(h==="home"&&x.id==="flight")));document.querySelectorAll("nav a").forEach(x=>x.classList.toggle("on",x.getAttribute("href")==="#"+h));scrollTo(0,0)}
 addEventListener("hashchange",goPage);goPage();
+let bkp=null;const bst=m=>$("bst").textContent=m;
+$("bx").onclick=async()=>{const o={app:"nagoya-trip",v:1,data:{}};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf("ngy")===0)o.data[k]=localStorage.getItem(k)}}catch(e){}
+let d=null;try{d=window.claude&&await claude.use("downloads")}catch(e){}
+if(!d){try{const u=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:"application/json"})),a=document.createElement("a");a.href=u;a.download="nagoya-trip-backup.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);bst("已下載備份檔，請把檔案傳到另一台裝置")}catch(x){bst("下載失敗，請改用其他瀏覽器再試")}return}
+try{await d.save({filename:"nagoya-trip-backup.json",data:JSON.stringify(o)});bst("已匯出，請把檔案傳到另一台裝置")}catch(e){bst(e&&e.code==="declined"?"已取消下載":"下載失敗，請再試一次")}};
+$("bi").onchange=e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(o.app!=="nagoya-trip"||!o.data)throw 0;bkp=o.data;$("bc").hidden=false;bst("已讀取「"+f.name+"」，確認後會覆蓋這台目前的資料")}catch(x){bkp=null;$("bc").hidden=true;bst("這不是有效的備份檔，請選擇從本頁匯出的 .json 檔")}};r.onerror=()=>bst("檔案無法讀取");r.readAsText(f)};
+$("bn").onclick=()=>{bkp=null;$("bc").hidden=true;bst("已取消匯入")};
+$("by").onclick=()=>{if(!bkp)return;try{Object.keys(bkp).forEach(k=>{if(k.indexOf("ngy")===0&&typeof bkp[k]==="string")localStorage.setItem(k,bkp[k])});bst("匯入完成，重新載入中…");setTimeout(()=>location.reload(),500)}catch(x){bst("匯入失敗：瀏覽器空間不足或不允許儲存")}};
 </script></body></html>

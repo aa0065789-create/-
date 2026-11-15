@@ -50,6 +50,7 @@ nav a.on{background:var(--ink);color:var(--bg)}
 .st{border:0;background:none;padding:2px;cursor:pointer}.st svg{width:30px;height:30px;fill:#fff;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;display:block}.st.on svg{fill:var(--ye)}
 .row.lr{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"p n a" "p d b";gap:4px 10px;align-items:center}
 .lr .pill{grid-area:p;min-width:58px;text-align:center;white-space:nowrap;margin:0}.lr .ln{grid-area:n;min-width:0;overflow-wrap:anywhere}.lr .la{grid-area:a;white-space:nowrap;text-align:right}.lr .ld{grid-area:d}.lr .lb2{grid-area:b;display:flex;gap:6px;justify-content:flex-end}.lr button{white-space:nowrap;padding:2px 12px;font-size:14px}
+.t-bs{background:#E8F0D6}.t-tx{background:#FBDDD4}
 main>section{display:none}main>section.on{display:block;animation:pop .45s both}.nbt.has{background:var(--ye)}.nbt svg{display:block}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.top .nbt{margin-top:0;flex:none}.mp{display:inline-block;border:3px solid var(--ink);border-radius:14px;padding:0 9px;font-size:12px;background:var(--bl);color:var(--ink);text-decoration:none;margin:0 4px 2px 0}.in .f,.card>textarea.f{margin-top:6px}.br{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}.nv{overflow-wrap:anywhere;margin-top:8px;background:#FFF4D3;border:3px dashed var(--ink);border-radius:14px;padding:6px 10px;white-space:pre-wrap;font-size:14px}.mk{margin-left:6px}.lb{display:block;font-size:13px}.lb .f{margin-top:4px}.g{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}.row{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:8px 12px;margin-bottom:8px;animation:pop .4s both}.row .x{margin-left:auto;text-align:right}.row button{font:inherit;border:3px solid var(--ink);border-radius:12px;background:var(--bg);cursor:pointer;color:var(--ink)}
 @keyframes bounce{0%{transform:scale(.85)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes pop{0%{opacity:0;transform:translateY(18px) scale(.95)}70%{transform:translateY(-4px)}100%{opacity:1;transform:none}}
@@ -94,7 +95,7 @@ main>section{display:none}main>section.on{display:block;animation:pop .45s both}
 
 <section id="ledger"><h2>💰 旅遊記帳</h2><div class="card">
 <div style="font-size:14px">累計總消費金額：</div><div class="fl" style="gap:6px"><div class="big" id="lt">¥0</div><div id="ltw" style="font-size:13px;text-align:right"></div></div>
-<div id="lc" style="margin:6px 0"></div><div style="font-size:12px">點一下分類可以看那個分類花了哪些項目</div><div style="font-size:13px;margin-top:8px">每日加總</div><div id="ld" style="margin-top:4px"></div>
+<div id="lc" style="margin:6px 0"></div><div style="font-size:12px">點一下分類可以看那個分類花了哪些項目</div><div style="font-size:13px;margin-top:8px">每日加總（點一下看當天明細）</div><div id="ld" style="margin-top:4px"></div>
 <label style="font-size:13px">匯率（1 日圓＝幾元台幣）<input class="f" id="rt" type="number" step="0.001" min="0"></label></div>
 <div class="card"><div class="g"><label class="lb">輸入消費金額<input class="f" id="am" type="number" inputmode="decimal" placeholder="例如：1200"></label><label class="lb">幣別<select class="f" id="cu"><option>JPY</option><option>TWD</option></select></label>
 <label class="lb">消費分類<select class="f" id="ct"></select></label><label class="lb">日期<select class="f" id="dy"><option>出發前</option><option>Day 1</option><option>Day 2</option><option>Day 3</option></select></label></div>
@@ -113,7 +114,7 @@ main>section{display:none}main>section.on{display:block;animation:pop .45s both}
 </main>
 <div class="md" id="md" hidden><div class="mb" id="mb"></div></div>
 <script>
-const T={air:["飛機","t-air"],sub:["地鐵","t-sub"],walk:["步行","t-walk"],bus:["一日遊","t-bus"],train:["名鐵","t-train"],mrt:["機捷","t-train"],car:["包車","t-bus"]};
+const T={air:["飛機","t-air"],sub:["地鐵","t-sub"],walk:["步行","t-walk"],bus:["一日遊","t-bus"],train:["名鐵","t-train"],mrt:["機捷","t-train"],car:["包車","t-bus"],bs:["公車","t-bs"],tx:["計程車","t-tx"]};
 const D=[
 {d:"11/27",w:"五",x:[
 ["06:25","抵達名古屋中部機場","","air"],
@@ -169,33 +170,39 @@ function drawMap(n){const d=MP[n],nm=d.r.map(i=>d.p[i][3]),u="https://www.google
 document.getElementById("dm").innerHTML=`<div style="margin-bottom:14px"><a class="mp" style="background:var(--ye);font-size:14px;padding:4px 14px" href="${u}" target="_blank" rel="noopener">開啟google地圖看當日完整路線</a></div>`}
 const esc=t=>t.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const kl=k=>{const[a,b]=String(k).split("-"),d=D[a];return`Day ${+a+1}　${d.x[b][0]} ${d.x[b][1]}`};
+let TR={},tmv=[];try{TR=JSON.parse(localStorage.getItem("ngyTR")||"{}")}catch(e){}
+const sTR=()=>{try{localStorage.setItem("ngyTR",JSON.stringify(TR))}catch(x){}};
+const TO=[["bus","一日遊"],["train","名鐵"],["sub","地鐵"],["air","飛機"],["walk","步行"],["bs","公車"],["tx","計程車"],["car","包車"]];
+const tg=(n,i)=>{const e=D[n].x[i],l=TR[n+"-"+i]||e[3].split(",");return l.map(k=>`<span class="pill ${T[k][1]}">${T[k][0]}</span>`).join("")+(M[e[1]]?`<a class="mp" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(M[e[1]])}" target="_blank" rel="noopener">📍 Google 地圖</a>`:"")};
 function drawI(k){const[a,j]=k.split("-");if(+a!==cur)return;const it=tl.children[+j];if(!it)return;const c=it.querySelector(".in"),b=it.querySelector("[data-j]"),h=N[k];
-b.innerHTML=IC;b.classList.toggle("has",!!h);
-c.innerHTML=ed===k?`<textarea class="f" rows="3" placeholder="寫下這個行程的備註，或改去哪裡……">${esc(dr!==null?dr:(h||""))}</textarea><div class="br"><button class="nbt" data-act="save">💾 儲存</button><button class="nbt" data-act="cancel">取消</button>${h?`<button class="nbt" data-act="del" style="background:var(--co)">${dc===k?"再按一次確認刪除":"🗑 刪除"}</button>`:""}</div>`:(h?`<div class="nv">${esc(h)}</div>`:"")}
+b.innerHTML=IC;b.classList.toggle("has",!!h);it.querySelector(".tgs").innerHTML=tg(+a,+j);
+c.innerHTML=ed===k?`<div style="font-size:13px;margin-top:8px">交通方式（點選更換，可只選一個）</div><div class="br" style="margin-top:4px">${TO.map(([x,l])=>`<button class="nbt${tmv.includes(x)?" has":""}" data-tm="${x}" style="margin:0">${l}</button>`).join("")}</div><textarea class="f" style="margin-top:8px" rows="3" placeholder="寫下這個行程的備註，或改去哪裡……">${esc(dr!==null?dr:(h||""))}</textarea><div class="br"><button class="nbt" data-act="save">💾 儲存</button><button class="nbt" data-act="cancel">取消</button>${h?`<button class="nbt" data-act="del" style="background:var(--co)">${dc===k?"再按一次確認刪除":"🗑 刪除"}</button>`:""}</div>`:(h?`<div class="nv">${esc(h)}</div>`:"")}
 const tabs=document.getElementById("tabs"),tl=document.getElementById("tl");
 function show(n){cur=n;ed=null;dc=null;dr=null;drawMap(n);[...tabs.children].forEach((b,i)=>b.classList.toggle("on",i==n));
 tl.classList.remove("pop");void tl.offsetWidth;
-tl.innerHTML=D[n].x.map((e,i)=>`<div class="it${e[4]?" must":""}" style="--i:${i}"><div class="top"><div style="min-width:0"><div class="tm">${e[0]}${e[4]?'<span class="must-b">必去</span>':""}</div><h3>${e[1]}</h3></div><button class="nbt${N[n+"-"+i]?" has":""}" data-j="${i}" aria-label="備註">${IC}</button></div><div style="margin-top:2px">${e[3].split(",").map(k=>`<span class="pill ${T[k][1]}">${T[k][0]}</span>`).join("")}${M[e[1]]?`<a class="mp" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(M[e[1]])}" target="_blank" rel="noopener">📍 Google 地圖</a>`:""}</div><p>${e[2]}</p><div class="in"></div></div>`).join("");
+tl.innerHTML=D[n].x.map((e,i)=>`<div class="it${e[4]?" must":""}" style="--i:${i}"><div class="top"><div style="min-width:0"><div class="tm">${e[0]}${e[4]?'<span class="must-b">必去</span>':""}</div><h3>${e[1]}</h3></div><button class="nbt${N[n+"-"+i]?" has":""}" data-j="${i}" aria-label="備註">${IC}</button></div><div class="tgs" style="margin-top:2px">${tg(n,i)}</div><p>${e[2]}</p><div class="in"></div></div>`).join("");
 D[n].x.forEach((e,i)=>drawI(n+"-"+i));tl.classList.add("pop")}
 D.forEach((o,i)=>{const b=document.createElement("button");b.innerHTML=`Day ${i+1}<br>${o.d}（${o.w}）`;b.onclick=()=>show(i);tabs.appendChild(b)});show(0);
 const todo=["護照","登機資訊（MM724／MM723）","KLOOK／KKDAY 憑證","名鐵車票","日圓現金","網卡或 eSIM","行動電源","保暖外套","確認一日遊司機（前一天）"];
 let st={};try{st=JSON.parse(localStorage.getItem("ngy")||"{}")}catch(e){}
 document.getElementById("tdl").innerHTML=todo.map((t,i)=>`<label class="td"><input type="checkbox" data-i="${i}" ${st[i]?"checked":""}><span>${t}</span></label>`).join("");
 document.getElementById("tdl").onchange=e=>{st[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("ngy",JSON.stringify(st))}catch(x){}};
-const go=new Date("2026-11-27T02:55:00+08:00");
-function tick(){let s=Math.floor((go-Date.now())/1e3);const c=document.getElementById("cd");
-if(s<=0){c.innerHTML="";document.getElementById("cdn").textContent="出發囉！";return}
-const v=[["天",86400],["時",3600],["分",60],["秒",1]].map(([u,k])=>{const n=Math.floor(s/k);s%=k;return`<div><b>${n}</b><small>${u}</small></div>`});
-c.innerHTML=v.join("");document.getElementById("cdn").textContent="距離 11/27 02:55 起飛"}
+const GO=new Date("2026-11-27T02:55:00+08:00"),RB=new Date("2026-11-29T22:55:00+09:00"),LD=new Date("2026-11-30T01:30:00+08:00");
+function tick(){const n=Date.now();let t=GO,l="距離 11/27 02:55 起飛";
+if(n>=LD){t=LD;l="已經回國（11/30 01:30 抵達桃園）"}else if(n>=RB){t=LD;l="距離 11/30 01:30 回到桃園"}else if(n>=GO){t=RB;l="距離 11/29 22:55 回程起飛"}
+let s=Math.floor(Math.abs(t-n)/1e3);
+document.getElementById("cd").innerHTML=[["天",86400],["時",3600],["分",60],["秒",1]].map(([u,k])=>{const x=Math.floor(s/k);s%=k;return`<div><b>${x}</b><small>${u}</small></div>`}).join("");document.getElementById("cdn").textContent=l}
 tick();setInterval(tick,1e3);
 
 let L={rate:0.21,items:[]};try{L=Object.assign(L,JSON.parse(localStorage.getItem("ngyL")||"{}"))}catch(e){}
 const C=["餐飲","交通","購物","住宿","伴手禮","其他"],CC=["t-bus","t-sub","t-air","t-walk","t-train","t-sub"],$=i=>document.getElementById(i);
 $("ct").innerHTML=C.map(c=>`<option>${c}</option>`).join("");$("rt").value=L.rate;const sN=()=>{try{localStorage.setItem("ngyN",JSON.stringify(N))}catch(x){}};
-tl.onclick=e=>{const b=e.target.closest("[data-j],[data-act]");if(!b)return;const it=b.closest(".it"),k=cur+"-"+[...tl.children].indexOf(it);
-if(b.dataset.j!==undefined){const o=ed;ed=ed===k?null:k;dc=null;dr=null;if(o)drawI(o);drawI(k);if(ed===k)it.querySelector("textarea").focus();return}
-const a=b.dataset.act,t=it.querySelector("textarea");
-if(a==="save"){const v=t.value.trim();if(v)N[k]=v;else delete N[k];sN();ed=null;dc=null;dr=null;drawI(k)}
+tl.onclick=e=>{const b=e.target.closest("[data-j],[data-act],[data-tm]");if(!b)return;const it=b.closest(".it"),ix=[...tl.children].indexOf(it),k=cur+"-"+ix;
+if(b.dataset.j!==undefined){const o=ed;ed=ed===k?null:k;dc=null;dr=null;if(ed===k)tmv=(TR[k]||D[cur].x[ix][3].split(",")).slice();if(o)drawI(o);drawI(k);if(ed===k)it.querySelector("textarea").focus();return}
+const t=it.querySelector("textarea");
+if(b.dataset.tm){const x=b.dataset.tm;dr=t.value;tmv=tmv.includes(x)?tmv.filter(y=>y!==x):[...tmv,x];drawI(k);return}
+const a=b.dataset.act;
+if(a==="save"){const v=t.value.trim();if(v)N[k]=v;else delete N[k];sN();if(tmv.join()===D[cur].x[ix][3])delete TR[k];else TR[k]=tmv.slice();sTR();ed=null;dc=null;dr=null;drawI(k)}
 else if(a==="cancel"){ed=null;dc=null;dr=null;drawI(k)}
 else if(a==="del"){if(dc===k){delete N[k];sN();ed=null;dc=null;dr=null;drawI(k)}else{dr=t.value;dc=k;drawI(k);clearTimeout(dt);dt=setTimeout(()=>{dc=null;drawI(k)},3000)}}};
 L.items.forEach(o=>{if(o.ct==="門票")o.ct="其他"});
@@ -204,7 +211,7 @@ const jp=o=>o.cu=="JPY"?o.amt:o.amt/(L.rate||1);
 function rl(){const r=L.rate||0;let tot=0,by={};
 $("ll").innerHTML=L.items.slice().reverse().map(o=>{const j=jp(o);tot+=j;by[o.ct]=(by[o.ct]||0)+j;if(eid==o.id)return EF(o);
 return`<div class="row lr"><span class="pill ${CC[C.indexOf(o.ct)]}">${o.ct}</span><b class="ln">${esc(o.nt)||o.ct}</b><b class="la">${o.cu=="JPY"?"¥":"NT$"}${Math.round(o.amt).toLocaleString()}</b><small class="ld">${o.dy}</small><span class="lb2"><button data-e="${o.id}">編輯</button><button data-d="${o.id}"${lf==o.id?' style="background:var(--co)"':""}>${lf==o.id?"確認刪除":"刪除"}</button></span></div>`}).join("")||'<div class="card">還沒有記錄，花了錢就記一筆吧！</div>';
-const dd={};L.items.forEach(o=>dd[o.dy]=(dd[o.dy]||0)+jp(o));$("ld").innerHTML=["出發前","Day 1","Day 2","Day 3"].filter(k=>dd[k]).map(k=>`<div class="row" style="background:${DB[k]}"><span class="di">${DI[k]}</span><b>${k}</b><div class="x"><b>¥${Math.round(dd[k]).toLocaleString()}</b><br><small>約 NT$ ${Math.round(dd[k]*r).toLocaleString()}</small></div></div>`).join("")||"<small>記帳後會在這裡顯示每天的小計</small>";
+const dd={};L.items.forEach(o=>dd[o.dy]=(dd[o.dy]||0)+jp(o));$("ld").innerHTML=["出發前","Day 1","Day 2","Day 3"].filter(k=>dd[k]).map(k=>`<div class="row" data-dk="${k}" style="cursor:pointer;background:${DB[k]}"><span class="di">${DI[k]}</span><b>${k}</b><div class="x"><b>¥${Math.round(dd[k]).toLocaleString()}</b><br><small>約 NT$ ${Math.round(dd[k]*r).toLocaleString()}</small></div></div>`).join("")||"<small>記帳後會在這裡顯示每天的小計</small>";
 $("lt").textContent="¥"+Math.round(tot).toLocaleString();$("ltw").textContent="約 NT$ "+Math.round(tot*r).toLocaleString();
 $("lc").innerHTML=C.filter(c=>by[c]).map(c=>`<button class="pill pb ${CC[C.indexOf(c)]}" data-c="${c}">${c} ¥${Math.round(by[c]).toLocaleString()}／NT$ ${Math.round(by[c]*r).toLocaleString()}</button>`).join("")}
 $("ad").onclick=()=>{const a=parseFloat($("am").value);if(!(a>0)){$("am").focus();return}
@@ -241,6 +248,9 @@ function showCat(c){const r=L.rate||0,its=L.items.filter(o=>o.ct===c).sort((a,b)
 $("mb").innerHTML=`<div class="fl"><b style="font-size:18px">${c}</b><button class="nbt" id="mx" style="margin:0">關閉</button></div><div style="font-size:12px;margin-top:6px">所有天數累計　共 ${its.length} 筆</div><div style="font-size:26px;font-weight:700">¥${rd(tj)}</div><div style="font-size:14px">約 NT$ ${rd(tt)}</div><div style="margin-top:10px">${its.map(o=>`<div class="tdr"><div style="flex:1;min-width:0"><b>${esc(o.nt)||c}</b><br><small>${o.dy}</small></div><div style="text-align:right"><b>¥${rd(jy(o))}</b><br><small>約 NT$ ${rd(tw(o))}</small></div></div>`).join("")}</div>`;$("md").hidden=false;$("mb").scrollTop=0}
 $("lc").onclick=e=>{const b=e.target.closest("[data-c]");if(b)showCat(b.dataset.c)};
 $("md").onclick=e=>{if(e.target.id==="md"||e.target.id==="mx")$("md").hidden=true};
+function showDay(k){const r=L.rate||0,its=L.items.filter(o=>o.dy===k).sort((a,b)=>a.id-b.id),jy=o=>o.cu==="JPY"?o.amt:o.amt/(r||1),tw=o=>o.cu==="TWD"?o.amt:o.amt*r,tj=its.reduce((a,o)=>a+jy(o),0),tt=its.reduce((a,o)=>a+tw(o),0);
+$("mb").innerHTML=`<div class="fl"><b style="font-size:18px;display:flex;align-items:center;gap:8px"><span class="di" style="width:38px;height:38px">${DI[k]}</span>${k}</b><button class="nbt" id="mx" style="margin:0">關閉</button></div><div style="font-size:12px;margin-top:8px">當天累計　共 ${its.length} 筆</div><div style="font-size:26px;font-weight:700">¥${rd(tj)}</div><div style="font-size:14px">約 NT$ ${rd(tt)}</div><div style="margin-top:10px">${its.map(o=>`<div class="tdr"><div style="flex:1;min-width:0"><b>${esc(o.nt)||o.ct}</b><br><span class="pill ${CC[C.indexOf(o.ct)]}" style="margin:2px 0 0">${o.ct}</span></div><div style="text-align:right"><b>¥${rd(jy(o))}</b><br><small>約 NT$ ${rd(tw(o))}</small></div></div>`).join("")}</div>`;$("md").hidden=false;$("mb").scrollTop=0}
+$("ld").onclick=e=>{const b=e.target.closest("[data-dk]");if(b)showDay(b.dataset.dk)};
 const RV=["交通方便","環境乾淨","房間舒適"],STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.5 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
 let RT={};try{RT=JSON.parse(localStorage.getItem("ngyR")||"{}")}catch(e){}
 function drawRv(){const v=RV.map((t,i)=>RT[i]||0),av=v.filter(x=>x),m=av.length?(av.reduce((a,b)=>a+b,0)/av.length).toFixed(1):"－";
